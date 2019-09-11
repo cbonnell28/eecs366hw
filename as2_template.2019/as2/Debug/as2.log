@@ -1,12 +1,17 @@
 ﻿  as2.cpp
-E:\Life\Case\ComputerGraphics\Projects\as2_template.2019\as2\as2.cpp(46,1): warning C4996:  'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Life\Case\ComputerGraphics\Projects\eecs366hw2\as2_template.2019\as2\as2.cpp(34,2): warning C4091:  'typedef ': ignored on left of 'camera' when no variable is declared
+E:\Life\Case\ComputerGraphics\Projects\eecs366hw2\as2_template.2019\as2\as2.cpp(64,1): warning C4996:  'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message :  see declaration of 'fopen'
-E:\Life\Case\ComputerGraphics\Projects\as2_template.2019\as2\as2.cpp(55,1): warning C4996:  'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Life\Case\ComputerGraphics\Projects\eecs366hw2\as2_template.2019\as2\as2.cpp(73,1): warning C4996:  'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1197): message :  see declaration of 'fscanf'
-E:\Life\Case\ComputerGraphics\Projects\as2_template.2019\as2\as2.cpp(76,1): warning C4996:  'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Life\Case\ComputerGraphics\Projects\eecs366hw2\as2_template.2019\as2\as2.cpp(94,1): warning C4996:  'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message :  see declaration of 'fopen'
-E:\Life\Case\ComputerGraphics\Projects\as2_template.2019\as2\as2.cpp(81,1): warning C4996:  'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Life\Case\ComputerGraphics\Projects\eecs366hw2\as2_template.2019\as2\as2.cpp(99,1): warning C4996:  'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1197): message :  see declaration of 'fscanf'
-E:\Life\Case\ComputerGraphics\Projects\as2_template.2019\as2\as2.cpp(90,1): warning C4996:  'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Life\Case\ComputerGraphics\Projects\eecs366hw2\as2_template.2019\as2\as2.cpp(108,1): warning C4996:  'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1197): message :  see declaration of 'fscanf'
-  as2.vcxproj -> E:\Life\Case\ComputerGraphics\Projects\as2_template.2019\as2\Debug\as2.exe
+E:\Life\Case\ComputerGraphics\Projects\eecs366hw2\as2_template.2019\as2\as2.cpp(229,9): warning C4477:  'printf' : format string '%p' requires an argument of type 'void *', but variadic argument 1 has type 'double'
+E:\Life\Case\ComputerGraphics\Projects\eecs366hw2\as2_template.2019\as2\as2.cpp(229,9): warning C4477:  'printf' : format string '%p' requires an argument of type 'void *', but variadic argument 2 has type 'double'
+E:\Life\Case\ComputerGraphics\Projects\eecs366hw2\as2_template.2019\as2\as2.cpp(229,9): warning C4477:  'printf' : format string '%p' requires an argument of type 'void *', but variadic argument 3 has type 'double'
+E:\Life\Case\ComputerGraphics\Projects\eecs366hw2\as2_template.2019\as2\as2.cpp(314,9): warning C4477:  'printf' : format string '%p' requires an argument of type 'void *', but variadic argument 1 has type 'double'
+  as2.vcxproj -> E:\Life\Case\ComputerGraphics\Projects\eecs366hw2\as2_template.2019\as2\Debug\as2.exe

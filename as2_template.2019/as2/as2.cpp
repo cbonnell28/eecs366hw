@@ -15,6 +15,23 @@ int window_width, window_height;    // Window dimensions
 int PERSPECTIVE = OFF;
 int COORDINATES = ON;
 int OBJECTS = ON;
+int MOUSEZERO = 1;
+int MOUSETWO = 1;
+
+int OLDX = 0;
+int NEWX = 0;
+int OLDY = 0;
+int NEWY = 0;
+
+float RHO = 10;
+float PHI =  90*(3.14159/180);
+float THETA = 90* (3.14159 / 180);
+
+// Struct to keep track of cameras current position
+typedef struct camera {
+	float camerax, cameray, cameraz;
+	float upx, upy, upz;
+};
 
 // Vertex and Face data structure sued in the mesh reader
 // Feel free to change them
@@ -30,6 +47,7 @@ typedef struct _faceStruct {
 int verts, faces, norms;    // Number of vertices, faces and normals in the system
 point *vertList, *normList; // Vertex and Normal Lists
 faceStruct *faceList;	    // Face List
+camera c;
 
 // The mesh reader itself
 // It can read *very* simple obj files
@@ -170,44 +188,48 @@ void drawCoordinateAxis(void)
 
 void drawObjects(void) {
 	
-	// Draw a red rectangle
-	glColor3f(1, 0, 0);
+	int i;
+	point p1, p2, p3;
+
+	// Draw object from obj file
+	glColor3f(1, 0.2, 1);
 	glBegin(GL_POLYGON);
-	glVertex3f(0.8, 0.8, -0.8);
-	glVertex3f(0.8, -0.8, -0.8);
-	glVertex3f(-0.8, -0.8, -0.0);
-	glVertex3f(-0.8, 0.8, -0.0);
+	for (i = 0; i < faces; i++) {
+		p1.x = vertList[faceList[i].v1].x;
+		p1.y = vertList[faceList[i].v1].y;
+		p1.z = vertList[faceList[i].v1].z;
+
+		p2.x = vertList[faceList[i].v2].x;
+		p2.y = vertList[faceList[i].v2].y;
+		p2.z = vertList[faceList[i].v2].z;
+
+		p3.x = vertList[faceList[i].v3].x;
+		p3.y = vertList[faceList[i].v3].y;
+		p3.z = vertList[faceList[i].v3].z;
+
+		glVertex3f(p1.x, p1.y, p1.z);
+		glVertex3f(p2.x, p2.y, p2.z);
+		glVertex3f(p3.x, p3.y, p3.z);
+	}
 	glEnd();
-
-	// Draw a blue tetraheadron
-	glColor3f(0, 0, 1);
-	glBegin(GL_TRIANGLES);
-	glVertex3f(0.0, 1.6, 0.0);
-	glVertex3f(0.8, -0.4, 0.8);
-	glVertex3f(-0.8, -0.4, 0.8);
-
-	glVertex3f(0.0, 1.6, 0.0);
-	glVertex3f(0.8, -0.4, 0.8);
-	glVertex3f(0.0, -0.4, -0.8);
-
-	glVertex3f(0.0, 1.6, 0.0);
-	glVertex3f(0.0, -0.4, -0.8);
-	glVertex3f(-0.8, -0.4, 0.8);
-
-	glVertex3f(-0.8, -0.4, 0.8);
-	glVertex3f(0.8, -0.4, 0.8);
-	glVertex3f(0.0, -0.4, -0.8);
-	glEnd();
-
-	// Draw a green line
-	glColor3f(0, 1, 0);
-	glBegin(GL_LINES);
-	glVertex3f(1.8, 1.8, 0.0);
-	glVertex3f(0.1, 0.1, 0.0);
-	glEnd();
-
 }
 
+// Calculates the cameras position
+void positionCamera(void) {
+	if (RHO < 0)
+		RHO = 0;
+	c.camerax = RHO * sin(THETA * (3.14159 / 180)) * sin(PHI * (3.14159 / 180));
+	c.cameray = RHO * cos(THETA * (3.14159 / 180));
+	c.cameraz = RHO * sin(THETA * (3.14159 / 180)) * cos(PHI * (3.14159 / 180));
+
+	c.upx = (RHO * sin(THETA * (3.14159 / 180) - 1) * sin(PHI * (3.14159 / 180))) - c.camerax;
+	c.upy = (RHO * cos(THETA * (3.14159 / 180) - 1)) - c.cameray;
+	c.upz = (RHO * sin(THETA * (3.14159 / 180) - 1) * cos(PHI * (3.14159 / 180))) - c.cameraz;
+
+	printf("rho %p phicos %p phisin %p \n", RHO, sin(PHI * (3.14159 / 180)), cos(PHI * (3.14159 / 180)));
+
+	gluLookAt(c.camerax, c.cameray, c.cameraz, 0, 0, 0, c.upx, c.upy, c.upz);
+}
 
 // The display function. It is called whenever the window needs
 // redrawing (ie: overlapping window moves, resize, maximize)
@@ -226,7 +248,6 @@ void	display(void)
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		// Set the camera position, orientation and target
-		gluLookAt(2, 2, 5, 0, 0, 0, 0, 1, 0);
 	}
 	else {
 		// Orthogonal Projection 
@@ -237,6 +258,8 @@ void	display(void)
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 	}
+
+	positionCamera();
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -279,7 +302,16 @@ void	resize(int x,int y)
 // x and y are the location of the mouse (in window-relative coordinates)
 void	mouseButton(int button,int state,int x,int y)
 {
+	OLDX = x;
+	OLDY = y;
+	if (button == 0) {
+		MOUSEZERO = !state;
+	}
+	if (button == 2) {
+		MOUSETWO = !state;
+	}
     printf("Mouse click at %d %d, button: %d, state %d\n",x,y,button,state);
+	printf("Current rho: %p", RHO);
 }
 
 
@@ -287,7 +319,35 @@ void	mouseButton(int button,int state,int x,int y)
 // x and y are the location of the mouse (in window-relative coordinates)
 void	mouseMotion(int x, int y)
 {
-	printf("Mouse is at %d, %d\n", x,y);
+	OLDX = NEWX;
+	NEWX = x;
+	OLDY = NEWY;
+	NEWY = y;
+	if (MOUSEZERO){
+		if (OLDY > NEWY) {
+			THETA = THETA + 3;
+		}
+		if (OLDY < NEWY) {
+			THETA = THETA - 3;
+		}
+		if (OLDX > NEWX) {
+			PHI = PHI + 2;
+		}
+		if (OLDX < NEWX) {
+			PHI = PHI - 2;
+		}
+
+	}
+	else if (MOUSETWO) {
+		if (OLDY > NEWY) {
+			RHO = RHO - .2;
+		}
+		else if (OLDY < NEWY) {
+			RHO = RHO + .2;
+		}
+	}
+	display();
+	printf("Mouse is at %d, %d\n", x, y);
 }
 
 
@@ -344,6 +404,8 @@ void	keyboard(unsigned char key, int x, int y)
 // Here's the main
 int main(int argc, char* argv[])
 {
+	meshReader("teapot.obj", 0);
+
     // Initialize GLUT
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
